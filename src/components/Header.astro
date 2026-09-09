@@ -1,0 +1,35 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+import { siteConfig } from "../data/site-config";
+import photo from "../assets/photo.jpg";
+---
+
+<header id="top" class="sticky top-0 z-50 border-b border-line bg-background/80 backdrop-blur">
+  <nav class="grid h-20 w-full grid-cols-[1fr_auto_1fr] items-center px-4" aria-label="Main navigation">
+    <a href="#top" class="flex items-center justify-self-start" aria-label="Home">
+      <img src={photo.src} alt="Putra Hadiyanto Nugroho" class="h-10 w-10 rounded-full object-cover" />
+    </a>
+    <div class="hidden items-center gap-6 justify-self-center md:flex">
+      {siteConfig.nav.map((item) => (
+        <a
+          href={item.href}
+          class="text-md text-ink-muted transition-colors hover:text-ink"
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+    <div class="flex items-center justify-self-end">
+      <ThemeToggle size="lg" />
+    </div>
+  </nav>
+  <div class="border-t border-line md:hidden">
+    <nav class="flex items-center gap-5 overflow-x-auto py-2" aria-label="Mobile navigation">
+      {siteConfig.nav.map((item) => (
+        <a href={item.href} class="whitespace-nowrap text-sm text-ink-muted hover:text-ink">
+          {item.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>
