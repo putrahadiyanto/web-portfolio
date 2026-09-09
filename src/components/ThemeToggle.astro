@@ -1,0 +1,39 @@
+---
+const sizes = {
+  sm: {
+    track: 'h-5 w-9',
+    thumb: 'h-3 w-3 translate-x-1 dark:translate-x-5',
+  },
+  md: {
+    track: 'h-6 w-11',
+    thumb: 'h-4 w-4 translate-x-1 dark:translate-x-6',
+  },
+  lg: {
+    track: 'h-8  w-14',
+    thumb: 'h-6 w-6 translate-x-1 dark:translate-x-7',
+  },
+}
+
+const {
+  size = 'md',
+  transitionDuration = 150,
+} = Astro.props
+
+const s = sizes[size] || sizes.md;
+---
+
+<button id="theme-toggle" class="rounded-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 p-0 inline-flex" aria-label="Toggle theme">
+    <!-- The Track -->
+    <span class={`bg-line dark:bg-primary-600 relative inline-flex items-center rounded-full transition-colors ${s.track} p-0`} style={`transition-duration: ${transitionDuration}ms`}>
+        <!-- The Thumnb -->
+        <span class={`inline-block rounded-full bg-white transition-transform ${s.thumb}`} style={`transition-duration: ${transitionDuration}ms`}></span>
+    </span>
+</button>
+
+<script>
+    const toggle = document.getElementById('theme-toggle');
+    toggle?.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('themeMode', isDark ? 'dark' : 'light');
+    })
+</script>
