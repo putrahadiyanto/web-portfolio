@@ -1,0 +1,147 @@
+---
+import ProjectLayout from '../../layouts/ProjectLayout.astro';
+import Header from '../../components/Header.astro';
+import { projectsPreview } from '../../data/site-config';
+import { projectImages, projectStoryImages } from '../../data/project-images';
+
+export function getStaticPaths() {
+  return projectsPreview.map((p) => ({ params: { slug: p.slug }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+
+const techIconMap: Record<string, string> = {
+  Python: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+  PyTorch: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg",
+  "Vision Transformer": "https://cdn.simpleicons.org/pytorch/EE4C2C",
+  "Audio Transformer": "https://cdn.simpleicons.org/pytorch/EE4C2C",
+  FastAPI: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",
+  LangChain: "https://cdn.simpleicons.org/langchain",
+  MongoDB: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
+  Docker: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+  "Apache Airflow": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apacheairflow/apacheairflow-original.svg",
+};
+
+const details: Record<string, { kicker: string; story: string[] }> = {
+  "multimodal-ai-generated-content-detection": {
+    kicker: "GEMASTIK XVIII - UPI Official Representative · 97.76% Accuracy",
+    story: [
+      "With the rapid spread of synthetic media on platforms like TikTok, Instagram, and Facebook, distinguishing authentic video from AI-generated deepfakes has become a critical fraud prevention challenge. Visual artifacts are often subtle or hidden by compression, making cross-modal verification, combining both sight and sound, essential for reliable detection.",
+      "As Universitas Pendidikan Indonesia's official entry for GEMASTIK XVIII, I built a dual-stream Transformer architecture in PyTorch using a curated dataset of 1,379 Indonesian videos. The visual stream fine-tuned a Vision Transformer (ViT) for frame analysis, while a parallel Audio Transformer processed spectrograms. Predictions were ensembled via 5-fold cross-validation using equal-weighted soft voting (0.5 : 0.5) to maintain balanced performance.",
+      "The final model achieved 97.76% accuracy and a 97.62% F1-score on held-out validation splits. I open-sourced the codebase and technical documentation detailing the face-sampling, spectrogram synchronization, and evaluation pipeline for complete reproducibility.",
+    ],
+  },
+  "ai-powered-biology-assistant": {
+    kicker: "Collaborative Research with Lecturer · Spatial Audio for Assistive Learning",
+    story: [
+      "Visually impaired students face accessibility barriers in laboratory settings when identifying physical anatomical organ models and teaching props. This collaborative university research project aimed to foster student independence by building an assistive backend capable of scanning anatomical props and delivering real-time spatial audio guidance.",
+      "I engineered an orchestration layer using FastAPI and LangChain, integrated with Groq for low-latency inference. The pipeline maps object detection coordinates from YOLO, such as identifying specific anatomical organ structures, into dynamic spatial audio feedback and prompt context for an LLM. I implemented WebSockets for continuous real-time communication and stored adaptive quiz histories in MongoDB.",
+      "Directly grounding the LLM with YOLO bounding box metadata eliminated visual hallucinations during anatomical model identification. I containerized the entire stack using Docker to ensure seamless deployment and cross-environment reproducibility across academic lab settings.",
+    ],
+  },
+  "automated-idx-etl-pipeline": {
+    kicker: "Market Intelligence Pipeline · yFinance + Airflow + LLM Summarization",
+    story: [
+      "Gathering daily market intelligence for the Indonesian Stock Exchange (IDX) traditionally required manually toggling between stock tickers, PDF financial reports, and news feeds. Automating this pipeline eliminated a repetitive manual bottleneck and consolidated fragmented data sources into a single structured output.",
+      "I designed and scheduled Apache Airflow DAGs to concurrently pull stock metrics via yFinance, parse financial PDF documents, and scrape financial news. Extracted records are normalized into MongoDB, where an LLM summarization task extracts key market catalysts affecting Indonesian equities.",
+      "The processed financial data and AI-generated briefs are served through a unified Flask REST API. Each service is containerized using Docker, isolating the Airflow scheduler from the backend API endpoints for system stability.",
+    ],
+  },
+  "mpasi-rag-recommender": {
+    kicker: "1st Place PKM-KI AMLI 2025 · Personalized Pediatric Nutrition",
+    story: [
+      "Parents seeking advice on infant complementary feeding (MPASI) frequently encounter conflicting online recipes, which pose safety risks for infants with specific allergies or health conditions. This project was created to deliver evidence-based pediatric recommendations through a grounded AI system.",
+      "I developed GATA (Gizi Asisten Terpadu Anak), a Retrieval-Augmented Generation (RAG) web platform powered by LangChain and a Vector Database containing clinical pediatric guidelines. The prompt architecture enforces strict rules based on child age, medical profile, and allergies, explicitly instructing the model to reject low-confidence retrievals rather than generate unverified answers.",
+      "The system exposes structured meal plans via REST APIs and an intuitive web interface. The project won 1st Place nationally in the PKM-KI AMLI 2025 competition held by Asosiation MIPA LPTK Indonesia.",
+    ],
+  },
+};
+
+const d = details[project.slug];
+const storyExtra = projectStoryImages[project.slug];
+---
+
+<ProjectLayout title={`${project.title} — Putra Hadiyanto Nugroho`}>
+  <Header />
+  <main class="bg-background">
+    <div class="mx-auto max-w-5xl px-4 py-12 md:py-16">
+      <nav class="mb-8 flex items-center gap-2 text-sm text-ink-muted" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-ink">Home</a>
+        <span>/</span>
+        <a href="/projects" class="hover:text-ink">Projects</a>
+        <span>/</span>
+        <span class="text-ink">{project.title}</span>
+      </nav>
+
+      <p class="mb-3 text-sm font-medium tracking-widest text-ink-muted uppercase">Project</p>
+      <h1 class="text-3xl font-bold tracking-tight text-ink sm:text-4xl">{project.title}</h1>
+      <p class="mt-4 text-[15px] leading-7 text-ink-muted">{project.description}</p>
+
+      {projectImages[project.slug] && (
+        <div class="mt-8 overflow-hidden rounded-lg bg-surface">
+          <img
+            src={projectImages[project.slug].src}
+            alt={project.title}
+            width={projectImages[project.slug].width}
+            height={projectImages[project.slug].height}
+            class="h-auto w-full"
+            loading="eager"
+          />
+        </div>
+      )}
+
+      <div class="mt-6 flex flex-wrap gap-2">
+        {project.techStack.map((t) => (
+          <span class="inline-flex items-center gap-1.5 rounded-full bg-surface px-3 py-1 text-sm text-ink">
+            {techIconMap[t] && <img src={techIconMap[t]} alt="" class="h-4 w-4" loading="lazy" />}
+            {t}
+          </span>
+        ))}
+      </div>
+
+      <div class="mt-8 flex gap-3">
+        <a href={project.github} target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-background hover:opacity-90">
+          <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577v-2.165c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="/projects" class="inline-flex items-center gap-2 rounded-full bg-surface px-5 py-2.5 text-sm font-medium text-ink">
+          All projects
+        </a>
+      </div>
+
+      {d && (
+        <article class="mt-12 border-t border-line pt-10">
+          <p class="text-xs font-medium tracking-widest text-ink-muted uppercase">{d.kicker}</p>
+          <div class="mt-6 space-y-6">
+            {d.story.slice(0, 2).map((para) => (
+              <p class="text-[15px] leading-7 text-ink-muted">{para}</p>
+            ))}
+            {storyExtra && (
+              <figure class={storyExtra.portrait ? "mx-auto w-full max-w-md" : "w-full"}>
+                <img
+                  src={storyExtra.image.src}
+                  alt={storyExtra.caption}
+                  width={storyExtra.image.width}
+                  height={storyExtra.image.height}
+                  class="h-auto w-full rounded-lg"
+                  loading="lazy"
+                />
+                <figcaption class="mt-2 text-center text-xs leading-5 text-ink-muted">
+                  {storyExtra.caption}
+                </figcaption>
+              </figure>
+            )}
+            {d.story.slice(2).map((para) => (
+              <p class="text-[15px] leading-7 text-ink-muted">{para}</p>
+            ))}
+          </div>
+          <div class="mt-8 flex gap-3 border-t border-gray-100 pt-8">
+            <a href={project.github} target="_blank" rel="noreferrer" class="text-sm font-medium text-ink underline underline-offset-4 hover:text-ink-muted">Read the code</a>
+            <span class="text-ink-muted">·</span>
+            <a href="/projects" class="text-sm font-medium text-ink-muted hover:text-ink">Back to projects</a>
+          </div>
+        </article>
+      )}
+    </div>
+  </main>
+</ProjectLayout>

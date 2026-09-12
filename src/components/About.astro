@@ -1,0 +1,195 @@
+---
+import { siteConfig, education } from "../data/site-config";
+import photo from "../assets/photo.jpg";
+
+let wi = 0;
+const wd = () => `${wi++ * 30}ms`;
+
+const headingA = ["Aspiring", "AI/ML", "&"];
+const headingB = ["Data", "Engineer"];
+const para1 = [
+  { t: "I'm" },
+  { t: "Putra", c: "font-semibold text-ink" },
+  { t: "Hadiyanto", c: "font-semibold text-ink" },
+  { t: "Nugroho,", c: "font-semibold text-ink" },
+  { t: "a" },
+  { t: "Computer" },
+  { t: "Science" },
+  { t: "undergraduate" },
+  { t: "at" },
+  { t: "Universitas", c: "font-medium text-ink" },
+  { t: "Pendidikan", c: "font-medium text-ink" },
+  { t: "Indonesia", c: "font-medium text-ink" },
+  { t: "(GPA" },
+  { t: education.gpa + "," },
+  { t: education.graduation + ")" },
+  { t: "based" },
+  { t: "in" },
+  { t: siteConfig.location + "." },
+];
+const para2 = "I specialize in end-to-end deep learning systems, including fine-tuning YOLO, ViT, and Transformers for vision and audio, backend orchestration with FastAPI and LangChain, and automated ETL pipelines with Airflow and Docker. I enjoy shipping practical systems that connect models, data, and product.".split(" ");
+---
+
+<section id="about" class="border-t border-line bg-surface">
+  <div class="mx-auto max-w-5xl px-4 py-16 md:py-24">
+    <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <!-- Text - Left -->
+      <div class="order-2 lg:order-1">
+        <p class="mb-3 text-sm font-medium tracking-widest text-ink-muted uppercase">
+          {
+            ["About"].map((w) => (
+              <span class="about-word" style={`animation-delay: ${wd()}`}>{w}</span>
+            ))
+          }
+        </p>
+        <h2 class="text-3xl font-bold tracking-tight text-ink sm:text-4xl leading-tight">
+          {
+            headingA.map((w) => (
+              <span class="about-word mr-[0.28em]" style={`animation-delay: ${wd()}`}>{w}</span>
+            ))
+          }
+          <br />
+          {
+            headingB.map((w) => (
+              <span class="about-word text-ink-muted font-medium mr-[0.28em]" style={`animation-delay: ${wd()}`}>{w}</span>
+            ))
+          }
+        </h2>
+
+        <div class="mt-6 space-y-4 text-[15px] leading-7 text-ink-muted">
+          <p>
+            {
+              para1.map((w) => (
+                <span class={`about-word mr-[0.32em] ${w.c ?? ""}`} style={`animation-delay: ${wd()}`}>{w.t}</span>
+              ))
+            }
+          </p>
+          <p>
+            {
+              para2.map((w) => (
+                <span class="about-word mr-[0.32em]" style={`animation-delay: ${wd()}`}>{w}</span>
+              ))
+            }
+          </p>
+        </div>
+
+        <div class="about-float mt-8 flex flex-wrap gap-3" style={`animation-delay: ${wd()}`}>
+          <a
+            href={siteConfig.socials.github}
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex items-center gap-2 rounded-full bg-background px-4 py-2 text-sm font-medium text-ink transition-colors hover:opacity-80"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4" aria-hidden="true">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577v-2.165c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            GitHub
+          </a>
+          <a
+            href={siteConfig.socials.linkedin}
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-90"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4" aria-hidden="true">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.777 13.019H3.56V9h3.554v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            LinkedIn
+          </a>
+          <a
+            href={siteConfig.socials.email}
+            class="inline-flex items-center gap-2 rounded-full bg-background px-4 py-2 text-sm font-medium text-ink transition-colors hover:opacity-80"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-4 w-4" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5v-11Z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="m5 7 7 6 7-6"/>
+            </svg>
+            Contact me
+          </a>
+        </div>
+      </div>
+
+      <!-- Image - Right -->
+      <div class="order-1 flex justify-center lg:order-2 lg:justify-end">
+        <div class="relative w-full max-w-[420px]">
+          <div class="absolute -inset-3 -z-10 rounded-lg bg-background"></div>
+          <div class="absolute -inset-3 -z-10 rounded-lg bg-gradient-to-br from-ink/[0.06] via-transparent to-transparent blur-2xl"></div>
+          <img
+            src={photo.src}
+            alt={siteConfig.name}
+            width={photo.width}
+            height={photo.height}
+            class="aspect-[4/5] w-full rounded-lg object-cover"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes aboutFloatUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .about-word,
+  .about-float {
+    opacity: 0;
+    animation: aboutFloatUp 0.4s ease-out forwards;
+    animation-play-state: paused;
+  }
+
+  .about-word {
+    display: inline-block;
+    will-change: transform, opacity;
+  }
+
+  #about.is-visible .about-word,
+  #about.is-visible .about-float {
+    animation-play-state: running;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about-word,
+    .about-float {
+      opacity: 1;
+      animation: none;
+      transform: none;
+      animation-play-state: running;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const section = document.getElementById('about');
+    if (!section || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (section) section.classList.add('is-visible');
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            section.classList.add('is-visible');
+            observer.unobserve(section);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(section);
+    // fallback: if already in view on load
+    if (section.getBoundingClientRect().top < window.innerHeight) {
+      section.classList.add('is-visible');
+    }
+  })();
+</script>

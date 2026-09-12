@@ -1,0 +1,34 @@
+---
+import '../styles/global.css'
+const { title = 'Projects — Putra Hadiyanto Nugroho' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <script is:inline>
+      (() => {
+        const savedThemeMode = localStorage.getItem('themeMode') || 'dark';
+        document.documentElement.classList.toggle('dark', savedThemeMode === 'dark');
+      })();
+    </script>
+    <title>{title}</title>
+  </head>
+  <body class="bg-background text-ink font-sans pt-20">
+    <slot />
+  </body>
+</html>
+
+<style>
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>

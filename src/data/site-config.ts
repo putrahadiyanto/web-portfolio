@@ -13,11 +13,11 @@ export const siteConfig = {
     email: "mailto:putrahadiyantonugroho@gmail.com",
   },
   nav: [
-    { label: "About", href: "#about" },
-    { label: "Skills", href: "#skills" },
-    { label: "Projects", href: "#projects" },
-    { label: "Experience", href: "#experience" },
-    { label: "Contact", href: "#contact" },
+    { label: "About", href: "/#about" },
+    { label: "Projects", href: "/projects" },
+    { label: "Experience", href: "/#experience" },
+    { label: "Skills", href: "/#skills" },
+    { label: "Contact", href: "/#contact" },
   ],
 };
 
@@ -83,11 +83,11 @@ export const skillGroups = [
   },
   {
     label: "Data & Backend",
-    skills: ["Apache Airflow", "FastAPI", "Flask", "MongoDB", "Vector DB", "REST APIs"],
+    skills: ["Apache Airflow", "FastAPI", "MongoDB", "Vector DB", "REST APIs"],
   },
   {
     label: "Tools & Ops",
-    skills: ["Docker", "Git", "Selenium", "Appium", "Groq", "WebSockets"],
+    skills: ["Docker", "Git", "Selenium", "Appium", "WebSockets"],
   },
 ];
 

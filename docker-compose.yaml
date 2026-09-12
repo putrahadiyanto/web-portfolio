@@ -1,0 +1,13 @@
+services:
+  web-portfolio:
+    image: web-portfolio:latest
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflare_tunnel
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+      
+      

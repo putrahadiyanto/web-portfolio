@@ -1,0 +1,100 @@
+---
+import { siteConfig } from "../data/site-config";
+---
+
+<section id="contact" class="border-t border-line bg-surface">
+  <div class="mx-auto max-w-5xl px-4 pt-12 pb-8 md:pt-16 md:pb-10">
+    <div class="grid gap-10 md:grid-cols-2 md:gap-16">
+      <!-- Left -->
+      <div>
+        <p class="mb-3 text-sm font-medium tracking-widest text-ink-muted uppercase">Contact</p>
+        <h2 class="text-3xl font-bold tracking-tight text-ink sm:text-4xl leading-tight">
+          Let's connect &<br />build together
+        </h2>
+        <p class="mt-4 text-[15px] leading-7 text-ink-muted">
+          Based in {siteConfig.location}, open to internships, research collaborations, and freelance data/AI work. The fastest way to reach me is email.
+        </p>
+        <p class="mt-3 text-sm text-ink-muted">
+          <span class="font-medium text-ink">{siteConfig.location}</span>
+        </p>
+      </div>
+
+      <!-- Right - Pure links -->
+      <div class="flex flex-col gap-4">
+        <a
+          href={siteConfig.socials.email}
+          class="group flex items-center justify-between rounded-lg bg-background px-5 py-4 transition-colors hover:bg-background/80"
+        >
+          <div class="flex items-center gap-3">
+            <span class="flex h-9 w-9 items-center justify-center rounded-full bg-surface">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-4 w-4 text-ink" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5v-11Z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="m5 7 7 6 7-6"/>
+              </svg>
+            </span>
+            <div>
+              <p class="text-sm font-medium text-ink">Email</p>
+              <p class="text-sm text-ink-muted">{siteConfig.email}</p>
+            </div>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-4 w-4 text-ink-muted transition-transform group-hover:translate-x-0.5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M17 7H8m9 0v9"/>
+          </svg>
+        </a>
+
+        <a
+          href={siteConfig.socials.linkedin}
+          target="_blank"
+          rel="noreferrer"
+          class="group flex items-center justify-between rounded-lg bg-background px-5 py-4 transition-colors hover:bg-background/80"
+        >
+          <div class="flex items-center gap-3">
+            <span class="flex h-9 w-9 items-center justify-center rounded-full bg-surface">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 text-ink" aria-hidden="true">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.777 13.019H3.56V9h3.554v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </span>
+            <div>
+              <p class="text-sm font-medium text-ink">LinkedIn</p>
+              <p class="text-sm text-ink-muted">linkedin.com/in/putra-hadiyanto</p>
+            </div>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-4 w-4 text-ink-muted transition-transform group-hover:translate-x-0.5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M17 7H8m9 0v9"/>
+          </svg>
+        </a>
+
+        <a
+          href={siteConfig.socials.github}
+          target="_blank"
+          rel="noreferrer"
+          class="group flex items-center justify-between rounded-lg bg-background px-5 py-4 transition-colors hover:bg-background/80"
+        >
+          <div class="flex items-center gap-3">
+            <span class="flex h-9 w-9 items-center justify-center rounded-full bg-surface">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 text-ink" aria-hidden="true">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577v-2.165c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.63-5.37-12-12-12z"/>
+              </svg>
+            </span>
+            <div>
+              <p class="text-sm font-medium text-ink">GitHub</p>
+              <p class="text-sm text-ink-muted">github.com/putrahadiyanto</p>
+            </div>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-4 w-4 text-ink-muted transition-transform group-hover:translate-x-0.5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M17 7H8m9 0v9"/>
+          </svg>
+        </a>
+
+        <div class="rounded-lg bg-background px-5 py-4">
+          <p class="text-sm font-medium text-ink">Location</p>
+          <p class="text-sm text-ink-muted">{siteConfig.location}, available for remote and on-site in Bandung/Jakarta</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 border-t border-line pt-6 text-center text-sm text-ink-muted">
+      © 2026 {siteConfig.name}, Built with Astro & Tailwind
+    </div>
+  </div>
+</section>

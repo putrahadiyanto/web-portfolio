@@ -1,0 +1,48 @@
+---
+import { projectsPreview } from "../data/site-config";
+import ProjectCard from "./ProjectCard.astro";
+---
+
+<section id="projects" class="border-t border-line bg-background">
+  <div class="mx-auto max-w-5xl px-4 py-16 md:py-24">
+    <!-- Header -->
+    <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+      <div class="max-w-3xl">
+        <p class="mb-3 text-sm font-medium tracking-widest text-ink-muted uppercase">Projects</p>
+        <h2 class="text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+          Selected work
+        </h2>
+        <p class="mt-4 text-[15px] leading-7 text-ink-muted">
+          Four end-to-end builds across multimodal detection, RAG, and automated ETL. Each links to code and detail page.
+        </p>
+      </div>
+      <a
+        href="https://github.com/putrahadiyanto"
+        target="_blank"
+        rel="noreferrer"
+        class="hidden shrink-0 items-center gap-2 rounded-full bg-surface px-4 py-2 text-sm font-medium text-ink transition-colors hover:opacity-80 md:inline-flex"
+      >
+        View all on GitHub
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-3.5 w-3.5" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M17 7H8m9 0v9"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Grid -->
+    <div class="mt-10 grid gap-4 sm:gap-6 md:grid-cols-2">
+      {projectsPreview.map((project) => <ProjectCard project={project} />)}
+    </div>
+
+    <div class="mt-8 flex justify-center md:hidden">
+      <a
+        href="https://github.com/putrahadiyanto"
+        target="_blank"
+        rel="noreferrer"
+        class="inline-flex items-center gap-2 rounded-full bg-surface px-4 py-2 text-sm font-medium text-ink"
+      >
+        View all on GitHub
+      </a>
+    </div>
+  </div>
+</section>

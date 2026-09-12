@@ -1,0 +1,102 @@
+---
+import ProjectLayout from '../../layouts/ProjectLayout.astro';
+import Header from '../../components/Header.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { projectsPreview } from '../../data/site-config';
+import { projectImages } from '../../data/project-images';
+
+const techIconMap: Record<string, string> = {
+  Python: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+  PyTorch: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg",
+  "Vision Transformer": "https://cdn.simpleicons.org/pytorch/EE4C2C",
+  "Audio Transformer": "https://cdn.simpleicons.org/pytorch/EE4C2C",
+  FastAPI: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",
+  LangChain: "https://cdn.simpleicons.org/langchain",
+  MongoDB: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
+  Docker: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+  "Apache Airflow": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apacheairflow/apacheairflow-original.svg",
+  Transformers: "https://cdn.simpleicons.org/huggingface/FFD21E",
+  "REST APIs": "https://cdn.simpleicons.org/fastapi/009688",
+};
+---
+
+<ProjectLayout title="Projects — Putra Hadiyanto Nugroho">
+  <Header />
+  <main class="bg-background">
+    <div class="mx-auto max-w-5xl px-4 py-12 md:py-16">
+      <!-- Breadcrumb -->
+      <nav class="mb-8 text-sm text-ink-muted" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-ink">Home</a>
+        <span class="mx-2">/</span>
+        <span class="text-ink">Projects</span>
+      </nav>
+
+      <!-- Header - different layout than homepage section -->
+      <div class="border-b border-gray-100 pb-8">
+        <p class="mb-3 text-sm font-medium tracking-widest text-ink-muted uppercase">Portfolio</p>
+        <h1 class="text-4xl font-bold tracking-tight text-ink sm:text-5xl">Projects</h1>
+        <p class="mt-4 max-w-2xl text-[15px] leading-7 text-ink-muted">
+          Full archive of end-to-end builds. Each project links to GitHub and a dedicated detail page with overview, build steps, and results — different layout than the homepage preview grid.
+        </p>
+      </div>
+
+      <!-- Different layout: 1-col list with larger cards and alternating image placeholder -->
+      <div class="mt-10 grid gap-6">
+        {projectsPreview.map((project) => (
+          <div class="overflow-hidden rounded-lg bg-surface">
+            <div class="grid md:grid-cols-[1.4fr_1fr]">
+              <div class="p-8">
+                <h2 class="text-xl font-semibold leading-6 text-ink">
+                  <a href={`/projects/${project.slug}`} class="hover:underline underline-offset-4">{project.title}</a>
+                </h2>
+                <p class="mt-3 text-sm leading-6 text-ink-muted">{project.description}</p>
+                <div class="mt-5 flex flex-wrap gap-2">
+                  {project.techStack.map((t) => (
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-background px-2.5 py-1 text-xs font-medium text-ink">
+                      {techIconMap[t] && <img src={techIconMap[t]} alt="" class="h-3.5 w-3.5 object-contain" loading="lazy" width="14" height="14" />}
+                      {t}
+                    </span>
+                  ))}
+                </div>
+                <div class="mt-6 flex gap-4">
+                  <a href={project.github} target="_blank" rel="noreferrer" class="inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-sm font-medium text-background hover:opacity-90">
+                    GitHub
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-3.5 w-3.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M17 7H8m9 0v9"/></svg>
+                  </a>
+                  <a href={`/projects/${project.slug}`} class="inline-flex items-center gap-1.5 rounded-full bg-background px-4 py-2 text-sm font-medium text-ink">
+                    View details
+                  </a>
+                </div>
+              </div>
+              <div class="hidden items-center justify-center bg-background p-8 md:flex">
+                {projectImages[project.slug] ? (
+                  <a href={`/projects/${project.slug}`} class="block w-full overflow-hidden rounded-lg">
+                    <img
+                      src={projectImages[project.slug].src}
+                      alt={project.title}
+                      width={projectImages[project.slug].width}
+                      height={projectImages[project.slug].height}
+                      class="aspect-[16/10] w-full object-cover transition-transform duration-500 hover:scale-[1.02]"
+                      loading="lazy"
+                    />
+                  </a>
+                ) : (
+                  <div class="flex h-32 w-full items-center justify-center rounded-lg bg-surface text-sm text-ink-muted">
+                    Preview — {project.slug.slice(0, 20)}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-12 text-center">
+        <a href="/" class="inline-flex items-center gap-2 text-sm font-medium text-ink-muted hover:text-ink">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-4 w-4"><path stroke-linecap="round" stroke-linejoin="round" d="M15 18 9 12l6-6"/></svg>
+          Back to home
+        </a>
+      </div>
+    </div>
+  </main>
+</ProjectLayout>

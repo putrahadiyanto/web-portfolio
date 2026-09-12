@@ -5,8 +5,8 @@
 @import "@fontsource/plus-jakarta-sans/700.css";
 
 @theme {
-    --color-primary-600: #2563eb;
-    --color-primary-500: #3b82f6;
+    --color-primary-600: #111111;
+    --color-primary-500: #111111;
     --font-sans: "Plus Jakarta Sans", sans-serif;
 
     --color-background: var(--background);
@@ -18,18 +18,33 @@
 
 :root {
     --background: #ffffff;
-    --surface: #f8fafc;
-    --ink: #0f172a;
-    --ink-muted: #475569;
-    --line: #e2e8f0;
+    --surface: #f5f5f4;
+    --ink: #1c1917;
+    --ink-muted: #44403c;
+    --line: #d6d3d1;
 }
 
 .dark {
-    --background: #000000;
-    --surface: #0a0a0a;
-    --ink: #f5f5f5;
+    --background: #060606;
+    --surface: #1e1e1e;
+    --ink: #fafafa;
     --ink-muted: #a3a3a3;
-    --line: #262626;
+    --line: #2e2e2e;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
