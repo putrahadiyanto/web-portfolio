@@ -4,30 +4,68 @@ import { siteConfig } from "../data/site-config";
 ---
 
 <header id="top" class="fixed top-0 inset-x-0 z-50 border-b border-line bg-background/80 backdrop-blur">
-  <nav class="flex h-20 items-center px-4" aria-label="Main navigation">
-    <div class="mx-auto flex w-full max-w-5xl justify-end">
+  <nav class="flex h-16 items-center px-4 md:h-20" aria-label="Main navigation">
+    <div class="mx-auto flex w-full max-w-5xl items-center justify-end">
       <div class="hidden items-center gap-6 md:flex">
         {siteConfig.nav.map((item) => (
           <a
             href={item.href}
-            class="text-md text-ink-muted transition-colors hover:text-ink"
+            class="text-sm text-ink-muted transition-colors hover:text-ink"
           >
             {item.label}
           </a>
         ))}
       </div>
-    </div>
-    <div class="ml-6 shrink-0">
-      <ThemeToggle size="lg" />
+      <div class="flex items-center gap-2">
+        <div class="shrink-0 md:ml-6">
+          <ThemeToggle size="lg" />
+        </div>
+        <button
+          id="menu-btn"
+          type="button"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-ink md:hidden"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label="Toggle menu"
+        >
+          <svg id="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5" aria-hidden="true">
+            <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+          <svg id="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="hidden h-5 w-5" aria-hidden="true">
+            <path stroke-linecap="round" d="M6 6l12 12M18 6 6 18" />
+          </svg>
+        </button>
+      </div>
     </div>
   </nav>
-  <div class="border-t border-line md:hidden">
-    <nav class="mx-auto flex max-w-5xl items-center gap-5 overflow-x-auto px-4 py-2" aria-label="Mobile navigation">
+  <div id="mobile-menu" class="hidden border-t border-line md:hidden">
+    <nav class="mx-auto flex max-w-5xl flex-col px-4 py-2" aria-label="Mobile navigation">
       {siteConfig.nav.map((item) => (
-        <a href={item.href} class="whitespace-nowrap text-sm text-ink-muted hover:text-ink">
+        <a
+          href={item.href}
+          class="border-b border-line py-3 text-sm text-ink-muted last:border-0 hover:text-ink"
+        >
           {item.label}
         </a>
       ))}
     </nav>
   </div>
 </header>
+
+<script is:inline>
+  (() => {
+    const btn = document.getElementById('menu-btn');
+    const panel = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('icon-open');
+    const iconClose = document.getElementById('icon-close');
+    if (!btn || !panel || !iconOpen || !iconClose) return;
+    const setOpen = (open) => {
+      panel.classList.toggle('hidden', !open);
+      iconOpen.classList.toggle('hidden', open);
+      iconClose.classList.toggle('hidden', !open);
+      btn.setAttribute('aria-expanded', String(open));
+    };
+    btn.addEventListener('click', () => setOpen(panel.classList.contains('hidden')));
+    panel.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  })();
+</script>
