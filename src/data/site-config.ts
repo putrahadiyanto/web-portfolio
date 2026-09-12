@@ -1,5 +1,6 @@
 export const siteConfig = {
   name: "Putra Hadiyanto Nugroho",
+  url: "https://putrahadiyanto.web.id",
   title: "Aspiring AI/ML & Data Engineer",
   tagline:
     "Computer Science undergraduate at Universitas Pendidikan Indonesia specializing in end-to-end deep learning systems (YOLO, ViT, Transformers), backend orchestration (FastAPI, LangChain), and automated ETL pipelines (Airflow, Docker).",
