@@ -5,52 +5,63 @@ import { siteConfig } from "../data/site-config";
 
 <header id="top" class="fixed top-0 inset-x-0 z-50 border-b border-line bg-background/80 backdrop-blur">
   <nav class="flex h-16 items-center px-4 md:h-20" aria-label="Main navigation">
-    <div class="mx-auto flex w-full max-w-5xl items-center justify-end">
-      <div class="hidden items-center gap-6 md:flex">
-        {siteConfig.nav.map((item) => (
+    <div id="bar-inner" class="mx-auto flex w-full max-w-5xl items-center justify-end gap-4 md:gap-6">
+      <div id="bar-nav" class="hidden items-center gap-6 md:flex">
+        {siteConfig.nav.map((item, i) => (
           <a
             href={item.href}
-            class="text-sm text-ink-muted transition-colors hover:text-ink"
+            data-nav-link={i}
+            class="shrink-0 whitespace-nowrap text-sm text-ink-muted transition-colors hover:text-ink"
           >
             {item.label}
           </a>
         ))}
       </div>
-      <div class="flex items-center gap-2">
-        <div class="shrink-0 md:ml-6">
-          <ThemeToggle size="lg" />
-        </div>
-        <button
-          id="menu-btn"
-          type="button"
-          class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-ink md:hidden"
-          aria-expanded="false"
-          aria-controls="mobile-menu"
-          aria-label="Toggle menu"
-        >
-          <svg id="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5" aria-hidden="true">
-            <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
-          </svg>
-          <svg id="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="hidden h-5 w-5" aria-hidden="true">
-            <path stroke-linecap="round" d="M6 6l12 12M18 6 6 18" />
-          </svg>
-        </button>
+      <div id="bar-toggle" class="shrink-0">
+        <ThemeToggle size="lg" />
       </div>
+      <button
+        id="menu-btn"
+        type="button"
+        class="hidden h-10 w-10 shrink-0 items-center justify-center rounded-lg text-ink"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Toggle menu"
+      >
+        <svg id="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5" aria-hidden="true">
+          <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+        <svg id="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="hidden h-5 w-5" aria-hidden="true">
+          <path stroke-linecap="round" d="M6 6l12 12M18 6 6 18" />
+        </svg>
+      </button>
     </div>
   </nav>
-  <div id="mobile-menu" class="hidden border-t border-line md:hidden">
-    <nav class="mx-auto flex max-w-5xl flex-col px-4 py-2" aria-label="Mobile navigation">
-      {siteConfig.nav.map((item) => (
+  <div id="mobile-menu" class="hidden border-t border-line">
+    <nav class="mx-auto flex max-w-5xl flex-col divide-y divide-line px-4 py-2" aria-label="Collapsed navigation">
+      {siteConfig.nav.map((item, i) => (
         <a
           href={item.href}
-          class="border-b border-line py-3 text-sm text-ink-muted last:border-0 hover:text-ink"
+          data-panel-link={i}
+          class="py-3 text-sm text-ink-muted hover:text-ink"
         >
           {item.label}
         </a>
       ))}
+      <div class="flex items-center justify-between py-3">
+        <span class="text-sm text-ink-muted">Theme</span>
+        <ThemeToggle size="md" />
+      </div>
     </nav>
   </div>
 </header>
+
+<noscript>
+  <style>
+    #bar-nav { display: flex !important; overflow-x: auto; }
+    #bar-toggle { display: block !important; }
+  </style>
+</noscript>
 
 <script is:inline>
   (() => {
@@ -58,14 +69,81 @@ import { siteConfig } from "../data/site-config";
     const panel = document.getElementById('mobile-menu');
     const iconOpen = document.getElementById('icon-open');
     const iconClose = document.getElementById('icon-close');
-    if (!btn || !panel || !iconOpen || !iconClose) return;
+    const barInner = document.getElementById('bar-inner');
+    const barNav = document.getElementById('bar-nav');
+    const barToggle = document.getElementById('bar-toggle');
+    if (!btn || !panel || !iconOpen || !iconClose || !barInner || !barNav || !barToggle) return;
+
+    const links = Array.from(barNav.querySelectorAll('[data-nav-link]'));
+    const panelLinks = Array.from(panel.querySelectorAll('[data-panel-link]'));
+
     const setOpen = (open) => {
       panel.classList.toggle('hidden', !open);
       iconOpen.classList.toggle('hidden', open);
       iconClose.classList.toggle('hidden', !open);
       btn.setAttribute('aria-expanded', String(open));
     };
+
+    const setBtn = (show) => {
+      btn.classList.toggle('hidden', !show);
+      btn.classList.toggle('inline-flex', show);
+    };
+
+    // Sum visible child widths + gaps vs container width.
+    // Immune to flex clipping quirks (shrink/justify-end can hide scrollWidth overflow).
+    const overflows = () => {
+      const kids = Array.from(barInner.children).filter(
+        (el) => !el.classList.contains('hidden')
+      );
+      const gap = parseFloat(getComputedStyle(barInner).columnGap) || 0;
+      const needed =
+        kids.reduce((sum, el) => sum + el.getBoundingClientRect().width, 0) +
+        gap * Math.max(0, kids.length - 1);
+      return needed > barInner.clientWidth + 1;
+    };
+
+    // Panel mirrors exactly the links hidden from the bar.
+    const syncPanel = () => {
+      links.forEach((link, i) => {
+        const hidden = link.classList.contains('hidden');
+        if (panelLinks[i]) panelLinks[i].classList.toggle('hidden', !hidden);
+      });
+    };
+
+    // Greedy: show as many leading links as fit, overflow the rest + toggle into the menu.
+    const fit = () => {
+      links.forEach((link) => link.classList.remove('hidden'));
+      barNav.classList.remove('hidden');
+      barNav.classList.add('flex');
+      barToggle.classList.remove('hidden');
+      setBtn(false);
+
+      if (overflows()) {
+        for (let i = links.length - 1; i >= 0 && overflows(); i--) {
+          links[i].classList.add('hidden');
+        }
+        // Toggle moves into the menu too, freeing space for one more link if possible.
+        barToggle.classList.add('hidden');
+        setBtn(true);
+        for (let i = 0; i < links.length; i++) {
+          if (!links[i].classList.contains('hidden')) continue;
+          links[i].classList.remove('hidden');
+          if (overflows()) {
+            links[i].classList.add('hidden');
+            break;
+          }
+        }
+      } else {
+        setOpen(false);
+      }
+      syncPanel();
+    };
+
     btn.addEventListener('click', () => setOpen(panel.classList.contains('hidden')));
     panel.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    window.addEventListener('resize', fit);
+    window.addEventListener('load', fit);
+    if (document.fonts) document.fonts.ready.then(fit).catch(() => {});
+    fit();
   })();
 </script>
