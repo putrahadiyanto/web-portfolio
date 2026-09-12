@@ -1,6 +1,8 @@
 services:
   web-portfolio:
-    image: web-portfolio:latest
+      image: ghcr.io/putrahadiyanto/web-portfolio:latest
+      container_name: web-portfolio
+      restart: unless-stopped
 
   cloudflared:
     image: cloudflare/cloudflared:latest
